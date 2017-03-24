@@ -18,3 +18,7 @@ for example, to set the mouse LED to green:
 ```
 ./led_color.py 0 255 0
 ```
+
+#### Requirements
+* Python 2.7.*
+* PyUSB
