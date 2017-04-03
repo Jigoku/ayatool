@@ -1,4 +1,4 @@
-# BlackWeb AYA LED controller library
+# USB control for the BlackWeb AYA mouse
 # License : GPLv3
 # Version : 0.1
 # Author  :  Ricky K. Thomson
@@ -13,8 +13,7 @@ def open_usb():
 
 	if dev is None:
 		raise ValueError('Device is not connected')
-		
-		
+
 	dev.detach_kernel_driver(1)
 	usb.util.claim_interface(dev,1)
 
@@ -34,6 +33,7 @@ def change_color(r,g,b):
 	#changes the led colour
 	data = [0x07, 0x0a, 0x01, 0x00] + [int(r),int(g),int(b)] + [0x00]
 	send_ctrl(data)
+
 
 def change_mode(n):
 	#changes LED light effect
@@ -64,6 +64,7 @@ def store_settings():
 def factory_reset():
 	#doesn't seem to do anything?
 	data = [0x07, 0x03] + [0x00]*6
+
 
 def change_polling(n):
 	#change hardware mouse polling speed
