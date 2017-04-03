@@ -1,7 +1,7 @@
 # BlackWeb AYA LED controller library
 # License : GPLv3
 # Version : 0.1
-# Author  :  Ricky K. Thomson (24th March 2017)
+# Author  :  Ricky K. Thomson
 
 import usb.core
 import usb.util
@@ -24,16 +24,48 @@ def close_usb():
 	dev.attach_kernel_driver(1)
 
 
-def set_color(r,g,b):
+def change_color(r,g,b):
 	#set the led colour
 	colors = [int(r),int(g),int(b)]
 	data = [0x07, 0x0a, 0x01, 0x00] + colors + [0x00]
 	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000)
 
 
-def store_color():
+def change_mode(n):
+	#LED light effect
+	if n == 0:
+		#off
+		data = [0x07, 0x0c, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00]
+	elif n == 1:
+		#on
+		data = [0x07, 0x0b, 0x01, 0x00, 0x00, 0xaa, 0x00, 0x00]
+	elif n == 2:
+		#breathe
+		data = [0x07, 0x0b, 0x01, 0x00, 0x08, 0x00, 0x00, 0x00]
+	elif n == 3:
+		#cycle
+		data = [0x07, 0x0b, 0x01, 0x00, 0x08, 0xff, 0x00, 0x00]
+
+	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000)
+
+
+def store_settings():
 	#store color (persistent), flashes momentarily
 	data = [0x07,0x44,0x01,0x00,0x00,0x00,0x00,0x00]
 	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000)
 
+
+def change_polling(n):
+	#hardware mouse polling speed
+	if n == 0:
+		poll = [0x00] #125hz
+	elif n == 1:
+		poll = [0x01] #250hz
+	elif n == 2:
+		poll = [0x02] #500hz
+	elif n == 3:
+		poll = [0x03] #1000hz
+
+	data = [0x07,0x01] + poll + [0x00,0x00,0x00,0x00,0x00]
+	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000)
 
