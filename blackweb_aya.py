@@ -24,12 +24,15 @@ def close_usb():
 	dev.attach_kernel_driver(1)
 
 
+def send_usb(data):
+	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000)
+
+
 def change_color(r,g,b):
 	#set the led colour
 	colors = [int(r),int(g),int(b)]
 	data = [0x07, 0x0a, 0x01, 0x00] + colors + [0x00]
-	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000)
-
+	send_usb(data)
 
 def change_mode(n):
 	#LED light effect
@@ -46,13 +49,13 @@ def change_mode(n):
 		#cycle
 		data = [0x07, 0x0b, 0x01, 0x00, 0x08, 0xff, 0x00, 0x00]
 
-	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000)
+	send_usb(data)
 
 
 def store_settings():
 	#store color (persistent), flashes momentarily
 	data = [0x07,0x44,0x01,0x00,0x00,0x00,0x00,0x00]
-	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000)
+	send_usb(data)
 
 
 def change_polling(n):
@@ -67,5 +70,10 @@ def change_polling(n):
 		poll = [0x03] #1000hz
 
 	data = [0x07,0x01] + poll + [0x00,0x00,0x00,0x00,0x00]
-	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000)
+	send_usb(data)
+
+
+def debug():
+	send_usb([0x07,0x03,0x01,0x00,0x00,0x00,0x00,0x00])
+	send_usb([0x07,0x08,0x01,0x00,0x00,0x00,0x00,0x00])
 
