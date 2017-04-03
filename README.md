@@ -1,14 +1,14 @@
 # Linux userspace tools for the BlackWeb AYA mouse
 ### About
-A simple script to customise the LED colour of the mouse natively under a Linux environment.
-Reverse engineered using wireshark and usbmon to capture usb control frames from a windows VM, so far i have discovered how to set the LED color, and how to store this as a persistent setting.
+A userspace tool to customise the LED colour of the mouse natively under a Linux environment. Also supporting some other hardware based features such as mouse polling. It's possible this will work on other platforms too (bsd / osx).
 
-##### TODO;
-* Add support for turning the LED off
-* Add support to configure LED effect (on, breathing, cycle)
+The USB protocol was reverse engineered using wireshark and usbmon to capture USB control messages from a windows virtual machine.
 
 ### Current Features
-* LED colour control
+* change LED color 
+* change LED color mode (on, off, breathe, cycle)
+* Hardware persistent settings
+* Hardware mouse polling adjustment
 
 #### Usage
 ```
