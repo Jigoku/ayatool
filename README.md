@@ -12,6 +12,8 @@ The USB protocol was reverse engineered using wireshark and usbmon to capture US
 * Hardware mouse polling adjustment
 * GUI tool using PyQt
 
+
+
 ### WARNING
 This is still work in progress, there may be bugs or missing features
 The script requires root access (sudo) to write/read from the USB device
@@ -37,3 +39,6 @@ If the mouse randomly turns off the LED when setting a new profile, this is a bu
 * Python 2.7.*
 * PyUSB
 * PyQt / Qt4 (for the user interface)
+
+#### Screenshot
+![screenshot_2017-04-12_23-43-52](https://cloud.githubusercontent.com/assets/1535179/24982601/121e5fd8-1fda-11e7-9967-bc6128445a67.png)
