@@ -23,7 +23,7 @@ if os.geteuid() != 0:
 
 class config():
 	def __init__(self):
-		global rgb, profile, ledmode, pollingrate,smartkey
+		global rgb, profile, ledmode, pollingrate, smartkey
 		
 
 class AyaTool(QtGui.QMainWindow, ayatoolgui.Ui_MainWindow):
@@ -57,6 +57,10 @@ class AyaTool(QtGui.QMainWindow, ayatoolgui.Ui_MainWindow):
 		config.profile = blackweb_aya.get_profile()
 		self.comboMousePolling.setCurrentIndex(config.profile -1)
 		
+		# set the smartkey
+				
+		config.smartkey = 1 # find out how to get this value
+		self.comboSmartKey.setCurrentIndex(config.smartkey -1)
 		
 		# set the current color
 		config.rgb = blackweb_aya.get_color(config.profile)
