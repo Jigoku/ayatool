@@ -20,14 +20,13 @@ import blackweb_aya
 if os.geteuid() != 0:
 	exit("You need to have root privileges to run this script.")
 
+
 class config():
 	def __init__(self):
-		global rgb, profile, ledmode, pollingrate
+		global rgb, profile, ledmode, pollingrate,smartkey
 		
 
 class AyaTool(QtGui.QMainWindow, ayatoolgui.Ui_MainWindow):
-
-	
 	def __init__(self):
 		super(self.__class__, self).__init__()
 		self.setupUi(self)
@@ -40,6 +39,7 @@ class AyaTool(QtGui.QMainWindow, ayatoolgui.Ui_MainWindow):
 		self.btnAbout.activated.connect(self.About)
 		self.comboMousePolling.currentIndexChanged.connect(self.PollingRate)
 		self.comboProfile.currentIndexChanged.connect(self.Profile)
+		self.comboSmartKey.currentIndexChanged.connect(self.SmartKey)
 		self.btnApply.clicked.connect(self.UpdateMouse)
 		self.radioLedOff.clicked.connect(self.LedMode)
 		self.radioLedOn.clicked.connect(self.LedMode)
@@ -84,13 +84,13 @@ class AyaTool(QtGui.QMainWindow, ayatoolgui.Ui_MainWindow):
 		blackweb_aya.close_usb()
 		
 		
-		
 	def UpdateMouse(self):
 		blackweb_aya.open_usb()
 		blackweb_aya.set_profile(config.profile)
 		blackweb_aya.set_ledmode(config.profile,config.ledmode)
 		blackweb_aya.set_color(config.profile, config.rgb[0],config.rgb[1],config.rgb[2])
 		blackweb_aya.set_polling(config.profile,config.pollingrate)
+		blackweb_aya.set_smartkey(config.smartkey)
 		blackweb_aya.store_settings(config.profile)
 		blackweb_aya.close_usb()
 		
@@ -112,6 +112,9 @@ class AyaTool(QtGui.QMainWindow, ayatoolgui.Ui_MainWindow):
 	def Profile(self,i):
 		config.profile = i +1
 		
+	def SmartKey(self,i):
+		config.smartkey = i +1
+		
 	def FactoryReset(self):
 		blackweb_aya.open_usb()
 		blackweb_aya.factory_reset()
@@ -130,10 +133,7 @@ class AyaTool(QtGui.QMainWindow, ayatoolgui.Ui_MainWindow):
 		print ("test")
 
 
-
 class ColorBox(QtGui.QFrame):
-
-
 	def __init__(self,parent=None):
 		super(ColorBox,self).__init__(parent)
         

@@ -108,7 +108,6 @@ def get_ledmode(profile):
 		return 3
 
 
-
 def set_ledmode(profile, n):
 	#changes LED light effect
 
@@ -122,6 +121,12 @@ def set_ledmode(profile, n):
 		data = [0x07, 0x0b] + [profile] + [0x00, 0x08, 0xff, 0x00, 0x00] #cycle
 
 	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000) 
+
+
+def set_smartkey(n):
+	data = [0x07, 0x19, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00]
+	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000) 
+	
 
 
 def set_profile(profile):
