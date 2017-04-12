@@ -1,0 +1,2 @@
+#!/bin/sh
+pyuic4 ayatool.ui -o ayatoolgui.py

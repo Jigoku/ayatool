@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>314</width>
+    <height>421</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>AYA Mouse Tool</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="horizontalLayoutWidget_6">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>281</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="hboxProfile" stretch="1">
+     <item>
+      <widget class="QComboBox" name="comboProfile">
+       <item>
+        <property name="text">
+         <string>Profile Slot 1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Profile Slot 2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Profile Slot 3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Profile Slot 4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Profile Slot 5</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>281</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>LED Control</string>
+    </property>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>261</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hboxLedMode">
+      <property name="spacing">
+       <number>6</number>
+      </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QRadioButton" name="radioLedOff">
+        <property name="text">
+         <string>Off</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioLedOn">
+        <property name="text">
+         <string>On</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioLedBreathe">
+        <property name="text">
+         <string>Breathe</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioLedCycle">
+        <property name="text">
+         <string>Cycle</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>261</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hboxLedColor">
+      <item>
+       <widget class="QLabel" name="labelColor">
+        <property name="text">
+         <string>Change Color</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>180</y>
+      <width>281</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Mouse Settings</string>
+    </property>
+    <widget class="QWidget" name="horizontalLayoutWidget_5">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>261</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hboxSmartKey" stretch="1,1">
+      <item>
+       <widget class="QLabel" name="labelSmartKey">
+        <property name="text">
+         <string>Smart Key</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboSmartKey">
+        <item>
+         <property name="text">
+          <string>20ms</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>40ms</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>60ms</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>80ms</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>100ms</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>120ms</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>140ms</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>160ms</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>180ms</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>200ms</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>220ms</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>240ms</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>261</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hboxMousePolling" stretch="1,1">
+      <item>
+       <widget class="QLabel" name="labelMousePolling">
+        <property name="text">
+         <string>Polling Rate</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboMousePolling">
+        <item>
+         <property name="text">
+          <string>125hz</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>250hz</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>500hz</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1000hz</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>310</y>
+      <width>261</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="btnApply">
+       <property name="text">
+        <string>Apply</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>314</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="btnUpdateMouse"/>
+    <addaction name="btnFactoryReset"/>
+    <addaction name="btnExit"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="btnGithub"/>
+    <addaction name="btnAbout"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="btnAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="btnUpdateMouse">
+   <property name="text">
+    <string>Update Mouse</string>
+   </property>
+  </action>
+  <action name="btnFactoryReset">
+   <property name="text">
+    <string>Factory Reset</string>
+   </property>
+  </action>
+  <action name="btnExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="btnGithub">
+   <property name="text">
+    <string>Github Page</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
