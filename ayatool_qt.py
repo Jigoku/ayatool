@@ -41,6 +41,11 @@ class AyaTool(QtGui.QMainWindow, ayatoolgui.Ui_MainWindow):
 		self.comboMousePolling.currentIndexChanged.connect(self.PollingRate)
 		self.comboProfile.currentIndexChanged.connect(self.Profile)
 		self.btnApply.clicked.connect(self.UpdateMouse)
+		self.radioLedOff.clicked.connect(self.LedMode)
+		self.radioLedOn.clicked.connect(self.LedMode)
+		self.radioLedBreathe.clicked.connect(self.LedMode)
+		self.radioLedCycle.clicked.connect(self.LedMode)
+		
 		
 		self.hboxLedColor.addWidget(ColorBox())
 		
@@ -91,6 +96,18 @@ class AyaTool(QtGui.QMainWindow, ayatoolgui.Ui_MainWindow):
 		
 	def PollingRate(self,i):
 		config.pollingrate = i
+		
+	def LedMode(self):
+		if self.radioLedOff.isChecked():
+			config.ledmode = 0
+		if self.radioLedOn.isChecked():
+			config.ledmode = 1
+		if self.radioLedBreathe.isChecked():
+			config.ledmode = 2
+		if self.radioLedCycle.isChecked():
+			config.ledmode = 3
+			
+		print config.ledmode
 		
 	def Profile(self,i):
 		config.profile = i +1
