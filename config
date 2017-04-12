@@ -1,2 +1,2 @@
 #!/bin/sh
-pyuic4 ayatool.ui -o ayatoolgui.py
+pyuic4 qtdesigner/ayatool.ui -o ayatoolgui.py
