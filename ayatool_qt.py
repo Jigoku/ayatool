@@ -56,22 +56,22 @@ class AyaTool(QtGui.QMainWindow, ayatoolgui.Ui_MainWindow):
 		# open the USB device
 		blackweb_aya.open_usb()
 		
-		# set the current profile
+		# get the current profile
 		config.profile = blackweb_aya.get_profile()
 		self.comboMousePolling.setCurrentIndex(config.profile -1)
-		
-		# set the smartkey
+
+		# get the smartkey
 				
 		config.smartkey = 1 # find out how to get this value
 		self.comboSmartKey.setCurrentIndex(config.smartkey -1)
 		
-		# set the current color
+		# get the current color
 		config.rgb = blackweb_aya.get_color(config.profile)
 		ColorBox.setStyleSheet(self, "QWidget#ColorBox { background-color: rgb(%d,%d,%d) }" % (config.rgb[0],config.rgb[1],config.rgb[2]))
 		
-		# set the current LED mode
-		config.ledmode = blackweb_aya.get_ledmode(config.profile)
-		
+		# get the current LED mode
+		config.ledmode = blackweb_aya.get_ledmode(config.profile) 
+		print config.ledmode
 		if config.ledmode == 0:
 			self.radioLedOn.setChecked(1)
 		elif config.ledmode == 1:
@@ -114,7 +114,7 @@ class AyaTool(QtGui.QMainWindow, ayatoolgui.Ui_MainWindow):
 		if self.radioLedCycle.isChecked():
 			config.ledmode = 3
 			
-		print config.ledmode
+		#print config.ledmode
 		
 	def Profile(self,i):
 		config.profile = i +1

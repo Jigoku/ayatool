@@ -28,6 +28,7 @@ import usb.util
 
 VENDOR_ID = 0x3938
 PRODUCT_ID = 0x1101
+DEBUG = True
 
 def open_usb():
 	#setup the USB mouse ready for reads/writes
@@ -65,27 +66,41 @@ def close_usb():
 def usb_write(data):
 	#write to the usb device
 	#return number of bytes written
-	return dev.ctrl_transfer(
+
+	ret = dev.ctrl_transfer(
 		bmRequestType=0x21, 
 		bRequest=0x09, 
 		wValue=0x0307, 
 		wIndex=0x0001, 
 		data_or_wLength=data,timeout=1000
 	) 
-
+	
+	if DEBUG:
+		print "SEND " + hex2string(data)
+		
 
 def usb_read(data):
 	#send a write to the device
 	usb_write(data)
 	
 	#return response data
-	return dev.ctrl_transfer(
+	ret = dev.ctrl_transfer(
 		bmRequestType=0xa1, 
 		bRequest=0x1, 
 		wValue=0x0307, 
 		wIndex=0x0001, 
 		data_or_wLength=data,timeout=1000
 	) 
+	
+	if DEBUG:
+		print "RECV " + hex2string(ret)
+	
+	return ret
+	
+	
+def hex2string(h):
+	string = "".join("%02x " % b for b in h)
+	return string
 	
 	
 def get_color(profile):
@@ -114,14 +129,21 @@ def get_ledmode(profile):
 	data = [0x07, 0x8c] + [profile] + [0x00]*5
 	ret = usb_read(data)
 	
+	#TODO FIX THIS
 	#return the LED mode as int (0-3)
 	if ret[3] == 0x0f: 
 		return 0 #off
 	elif ret[3] == 0x00:
 		return 1 #on
 	elif ret[3] == 0x0a:
+		#data = [0x07, 0x8b] + [profile] + [0x00]*5
+		#ret2 = usb_read(data)
+		#if ret2[3] == 0x08:
 		return 2 #breathe
 	elif ret[3] == 0x07:
+		#data = [0x07, 0x8b] + [profile] + [0x00]*5
+		#ret2 = usb_read(data)
+		#if ret2[4] == 0xff:
 		return 3 #cycle
 
 
