@@ -1,0 +1,1 @@
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="3938", ATTRS{idProduct}=="1101", GROUP:="plugdev"

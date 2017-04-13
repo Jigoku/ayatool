@@ -23,9 +23,6 @@ import sys, os
 import ayatoolgui
 import blackweb_aya
 
-if os.geteuid() != 0:
-	exit("You need to have root privileges to run this script.")
-
 
 class config():
 	def __init__(self):
@@ -146,14 +143,13 @@ class AyaTool(QtGui.QMainWindow, ayatoolgui.Ui_MainWindow):
 class ColorBox(QtGui.QFrame):
 	def __init__(self,parent=None):
 		super(ColorBox,self).__init__(parent)
-        
 
         # setup ColorBox widget
 		self.color = QtCore.Qt.white
 		self.setFixedHeight(20)
-		self.setFrameStyle(1)
+		self.setFrameStyle(0)
 		self.setObjectName("ColorBox");
-		self.setStyleSheet("QWidget { border-color: rgba(0,0,0,0)}")
+		self.setStyleSheet("QWidget { border-color: rgba(,0,0,0)}")
 		
 		
 	def mousePressEvent(self, e):
@@ -164,10 +160,15 @@ class ColorBox(QtGui.QFrame):
    
 		if col.isValid():
 			config.rgb = [col.red(), col.green(), col.blue()]
-			print (config.rgb)
+			
 			# update ColorButton background color
 			self.setStyleSheet("QWidget#ColorBox { background-color: rgb(%d,%d,%d) }" % (config.rgb[0],config.rgb[1],config.rgb[2]))
 
+			#Possibly preview the LED color, by setting it, without storing the setting here?
+			#blackweb_aya.open_usb()
+			#blackweb_aya.set_ledmode(config.profile,config.ledmode)
+			#blackweb_aya.set_color(config.profile, config.rgb[0],config.rgb[1],config.rgb[2])
+			#blackweb_aya.close_usb()
 
 def main():
 	app = QtGui.QApplication(sys.argv)

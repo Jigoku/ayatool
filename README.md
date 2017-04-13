@@ -22,6 +22,12 @@ This is still work in progress, there may be bugs or missing features
 The script requires root access (sudo) to write/read from the USB device
 The author takes no responsibility for anything that may go wrong!
 
+You should be able to setup a udev rule for the device, as to not require root access like so:
+*/etc/udev/rules.d/50-blackweb-aya.rules*
+```
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="3938", ATTRS{idProduct}=="1101", GROUP:="plugdev"
+```
+
 #### Running the command line tool
 ```
 ./ayatool.py <r> <g> <b>
@@ -36,7 +42,7 @@ for example, to set the mouse LED to green:
 ./ayatool_qt.py
 ```
 
-If the mouse randomly turns off the LED when setting a new profile, this is a bug. You can work around it by issuing the factory reset command ('File > Factory Reset' in the PyQt interface).
+If the mouse randomly turns off the LED when setting a new profile, this is a bug. You can work around it by issuing the factory reset command ('File > Factory Reset' in the PyQt interface). It seems to be caused by setting breathe/cycle as the LED mode, but can be unpredictable. Still working on figuring out why this happens. 
 
 #### Requirements
 * Python 2.7.*

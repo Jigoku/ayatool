@@ -16,9 +16,6 @@
 import blackweb_aya
 import sys, os
 
-if os.geteuid() != 0:
-	exit("You need to have root privileges to run this script.")
-
 if len(sys.argv) <= 3:
 		for v in sys.argv:
 			if type(v) != int or v < 0 or v > 255:
