@@ -1,6 +1,6 @@
 # USB library for the BlackWeb AYA mouse
 #
-# Copyright (C) 2015 Ricky K. Thomson
+# Copyright (C) 2017 Ricky K. Thomson
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@
 # u should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-#    VERSION    : 0.2
+#    VERSION    : 0.3
 #
 #    Vendor ID  : 3938
 #    Product ID : 1101
@@ -30,6 +30,7 @@ VENDOR_ID = 0x3938
 PRODUCT_ID = 0x1101
 
 def open_usb():
+	#setup the USB mouse ready for reads/writes
 	global dev, interface
 	
 	
@@ -47,34 +48,53 @@ def open_usb():
 			
 	usb.util.claim_interface(dev,interface)
 	dev.set_interface_altsetting(interface=interface,alternate_setting=0)
-	endpoint = dev[0][(interface,0)][0]
 	
-	print (endpoint)
-
-
+	#DEBUG
+	#endpoint = dev[0][(interface,0)][0]
+	#print (endpoint)
 
 
 
 def close_usb():
+	#reattach the kernel driver
 	usb.util.release_interface(dev,interface)
 	dev.attach_kernel_driver(interface)
 
 
 
-#
+def usb_write(data):
+	#write to the usb device
+	#return number of bytes written
+	return dev.ctrl_transfer(
+		bmRequestType=0x21, 
+		bRequest=0x09, 
+		wValue=0x0307, 
+		wIndex=0x0001, 
+		data_or_wLength=data,timeout=1000
+	) 
 
+
+def usb_read(data):
+	#send a write to the device
+	usb_write(data)
+	
+	#return response data
+	return dev.ctrl_transfer(
+		bmRequestType=0xa1, 
+		bRequest=0x1, 
+		wValue=0x0307, 
+		wIndex=0x0001, 
+		data_or_wLength=data,timeout=1000
+	) 
+	
+	
 def get_color(profile):
 	
-	# bytes to send
+	#get the current LED color
 	data = [0x07, 0x8a] + [profile] + [0x00]*5
+	ret = usb_read(data)
 	
-	# USB request
-	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000) 
-	
-	# USB response
-	ret = dev.ctrl_transfer(bmRequestType=0xa1, bRequest=0x1, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000) 
-	
-	#debug
+	#DEBUG
 	#hex_string = "".join("%02x" % b for b in ret)
 	#print hex_string
 	
@@ -84,32 +104,29 @@ def get_color(profile):
 	
 	
 def set_color(profile, r,g,b):
-	# bytes to change the led colour
+	# set a new LED colour
 	data = [0x07, 0x0a] + [profile] + [ 0x00] + [int(r),int(g),int(b)] + [0x00]
-	
-	# USB request
-	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000) 
+	usb_write(data)
 
 
 def get_ledmode(profile):
+	#get the active LED light mode
 	data = [0x07, 0x8c] + [profile] + [0x00]*5
-	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000) 
+	ret = usb_read(data)
 	
-	ret = dev.ctrl_transfer(bmRequestType=0xa1, bRequest=0x1, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000) 
-	
-	# active LED mode
-	if ret[3] == 0x0f:
-		return 0
+	#return the LED mode as int (0-3)
+	if ret[3] == 0x0f: 
+		return 0 #off
 	elif ret[3] == 0x00:
-		return 1
+		return 1 #on
 	elif ret[3] == 0x0a:
-		return 2
+		return 2 #breathe
 	elif ret[3] == 0x07:
-		return 3
+		return 3 #cycle
 
 
 def set_ledmode(profile, n):
-	#changes LED light effect
+	#set the LED light mode
 
 	if n == 0:
 		data = [0x07, 0x0c] + [profile] + [0x00, 0x00, 0x00, 0x00, 0x00] #off
@@ -120,45 +137,43 @@ def set_ledmode(profile, n):
 	elif n == 3:
 		data = [0x07, 0x0b] + [profile] + [0x00, 0x08, 0xff, 0x00, 0x00] #cycle
 
-	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000) 
-
+	usb_write(data)
+	
 
 def set_smartkey(n):
-	data = [0x07, 0x19, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00]
-	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000) 
+	#set the smartkey delay
+	data = [0x07, 0x19, 0x01] + [0x00]*5
+	usb_write(data)
 	
-
-
+	 
 def set_profile(profile):
-	#changes the profile in use
-	data = [0x07, 0x03] + [profile] + [0x00]*5 #set profile
-	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000) 
-
+	#set the new profile slot
+	data = [0x07, 0x03] + [profile] + [0x00]*5
+	usb_write(data)
+	
 
 def get_profile():
-
+	#get the actively set profile slot
 	data = [0x07, 0x83] + [0x00]*6
-	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000) 
+	ret = usb_read(data)
 	
-	ret = dev.ctrl_transfer(bmRequestType=0xa1, bRequest=0x1, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000) 
-	
-	# active profile number
 	return ret[1] 
 	
 
 def store_settings(profile):
-	data = [0x07, 0x44] + [profile] + [0x00]*5 #store hardware persistent settings
-	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000) 
-
+	#store hardware persistent settings
+	data = [0x07, 0x44] + [profile] + [0x00]*5 
+	usb_write(data)
+	
 
 def factory_reset():
-	#doesn't seem to do anything?
+	#reset to the hardware defaults
 	data = [0x07, 0x03] + [0x00]*6
-	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000) 
+	usb_write(data)
 
 
 def set_polling(profile, n):
-	#change hardware mouse polling speed
+	#set hardware mouse polling speed
 	if n == 0:
 		poll = [0x00] #125hz
 	elif n == 1:
@@ -169,14 +184,8 @@ def set_polling(profile, n):
 		poll = [0x03] #1000hz
 
 	data = [0x07] + [profile] + poll + [0x00]*5
-	dev.ctrl_transfer(bmRequestType=0x21, bRequest=0x09, wValue=0x0307, wIndex=0x0001, data_or_wLength=data,timeout=1000) 
+	usb_write(data)
 
 
 def debug():
-#	send_ctrl([0x07,0x03,0x01] + [0x00]*5)
-#	send_ctrl([0x07,0x08,0x01] + [0x00]*5)
-	#send_ctrl([0x07,0x03,0x00] + [0x00]*5)
-	#print (send_ctrl([0x07, 0x0c, 0x01, 0x00, 0x0f, 0x00, 0x00, 0x00]))
-	
-	#ret = dev.read(0x21, 0x8a, 0x01)
-	print ("test")
+	pass
