@@ -147,9 +147,9 @@ class ColorBox(QtGui.QFrame):
         # setup ColorBox widget
 		self.color = QtCore.Qt.white
 		self.setFixedHeight(20)
-		self.setFrameStyle(0)
+		self.setFrameStyle(1)
 		self.setObjectName("ColorBox");
-		self.setStyleSheet("QWidget { border-color: rgba(,0,0,0)}")
+		self.setStyleSheet("QWidget { border-color: rgba(0,0,0,0)}")
 		
 		
 	def mousePressEvent(self, e):
