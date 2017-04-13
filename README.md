@@ -2,6 +2,9 @@
 ### About
 Userspace tools to customise the LED colour of the mouse natively under a Linux environment. Also supporting some other hardware based features such as mouse polling. It's possible this will work on other platforms too (bsd / osx).
 
+Vendor  ID: 3938
+Product ID: 1101
+
 The USB protocol was reverse engineered using wireshark and usbmon to capture USB control messages from a windows virtual machine.
 
 ### Current Features
