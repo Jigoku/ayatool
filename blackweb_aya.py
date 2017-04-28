@@ -76,7 +76,7 @@ def usb_write(data):
 	) 
 	
 	if DEBUG:
-		print "SEND " + hex2string(data)
+		print "\tSEND " + hex2string(data)
 		
 
 def usb_read(data):
@@ -93,7 +93,7 @@ def usb_read(data):
 	) 
 	
 	if DEBUG:
-		print "RECV " + hex2string(ret)
+		print "\tRECV " + hex2string(ret)
 	
 	return ret
 	
@@ -104,7 +104,9 @@ def hex2string(h):
 	
 	
 def get_color(profile):
-	
+	if DEBUG:
+		print "get_color()"
+		
 	#get the current LED color
 	data = [0x07, 0x8a] + [profile] + [0x00]*5
 	ret = usb_read(data)
@@ -119,12 +121,17 @@ def get_color(profile):
 	
 	
 def set_color(profile, r,g,b):
+	if DEBUG:
+		print "set_color()"
+		
 	# set a new LED colour
 	data = [0x07, 0x0a] + [profile] + [ 0x00] + [int(r),int(g),int(b)] + [0x00]
 	usb_write(data)
 
 
 def get_ledmode(profile):
+	if DEBUG:
+		print "get_ledmode()"
 	#get the active LED light mode
 	data = [0x07, 0x8c] + [profile] + [0x00]*5
 	ret = usb_read(data)
@@ -148,6 +155,9 @@ def get_ledmode(profile):
 
 
 def set_ledmode(profile, n):
+	if DEBUG:
+		print "set_ledmode()"
+		
 	#set the LED light mode
 
 	if n == 0:
@@ -163,18 +173,27 @@ def set_ledmode(profile, n):
 	
 
 def set_smartkey(n):
+	if DEBUG:
+		print "set_smartkey()"
+		
 	#set the smartkey delay
 	data = [0x07, 0x19, 0x01] + [0x00]*5
 	usb_write(data)
 	
 	 
 def set_profile(profile):
+	if DEBUG:
+		print "set_profile()"
+		
 	#set the new profile slot
 	data = [0x07, 0x03] + [profile] + [0x00]*5
 	usb_write(data)
 	
 
 def get_profile():
+	if DEBUG:
+		print "get_profile()"
+		
 	#get the actively set profile slot
 	data = [0x07, 0x83] + [0x00]*6
 	ret = usb_read(data)
@@ -183,18 +202,27 @@ def get_profile():
 	
 
 def store_settings(profile):
+	if DEBUG:
+		print "store_settings()"
+		
 	#store hardware persistent settings
 	data = [0x07, 0x44] + [profile] + [0x00]*5 
 	usb_write(data)
 	
 
 def factory_reset():
+	if DEBUG:
+		print "factory_reset()"
+		
 	#reset to the hardware defaults
 	data = [0x07, 0x03] + [0x00]*6
 	usb_write(data)
 
 
 def set_polling(profile, n):
+	if DEBUG:
+		print "set_polling()"
+		
 	#set hardware mouse polling speed
 	if n == 0:
 		poll = [0x00] #125hz
