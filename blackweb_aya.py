@@ -18,7 +18,7 @@
 #    Vendor ID  : 3938
 #    Product ID : 1101
 
-
+ 
 # TODO
 # find out write command for get_polling()
 # find out write command for get_smartkey() / set_smartkey()
