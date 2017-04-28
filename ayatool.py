@@ -11,7 +11,12 @@
 # GNU General Public License for more details.
 # u should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-
+#
+# This is only a sample file and does not include full feature use
+# for controlling the mouse. ayatool_qt.py provieds more features.
+#
+# This will hopefully be updated soon to include the use of getargs
+# to set other features such as LED mode and polling/smartkey. 
 
 import blackweb_aya
 import sys, os

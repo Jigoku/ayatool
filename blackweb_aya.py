@@ -18,11 +18,6 @@
 #    Vendor ID  : 3938
 #    Product ID : 1101
 
- 
-# TODO
-# find out write command for get_polling()
-# find out write command for get_smartkey() / set_smartkey()
-
 import usb.core
 import usb.util
 
@@ -143,14 +138,8 @@ def get_ledmode(profile):
 	elif ret[3] == 0x00:
 		return 1 #on
 	elif ret[3] == 0x0a:
-		#data = [0x07, 0x8b] + [profile] + [0x00]*5
-		#ret2 = usb_read(data)
-		#if ret2[3] == 0x08:
 		return 2 #breathe
 	elif ret[3] == 0x07:
-		#data = [0x07, 0x8b] + [profile] + [0x00]*5
-		#ret2 = usb_read(data)
-		#if ret2[4] == 0xff:
 		return 3 #cycle
 
 
