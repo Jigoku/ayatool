@@ -5,7 +5,13 @@ Userspace tools to customise the LED colour of the mouse natively under a Linux 
 Vendor  ID: 3938
 Product ID: 1101
 
-The USB protocol was reverse engineered using wireshark and usbmon to capture USB control messages from a windows virtual machine. You can find more info about how things are changed onboard the mouse by reading here: https://github.com/Jigoku/ayatool/issues/2
+The USB protocol was reverse engineered using wireshark and usbmon to capture USB control messages from a windows virtual machine. All discovered features of this mouse are documented here: 
+
+https://github.com/Jigoku/ayatool/issues/2
+
+If you are interested in reading how this was done, i have posted an article here:
+
+https://bytepunk.wordpress.com/2017/03/25/reverse-engineering-a-usb-mouse/
 
 ### Current Features
 * profile slots
