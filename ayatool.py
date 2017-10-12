@@ -28,9 +28,6 @@ if len(sys.argv) <= 3:
 				sys.exit(1);
 				
 blackweb_aya.open_usb()
-#blackweb_aya.get_color(1)
-#blackweb_aya.get_ledmode(1)
-#blackweb_aya.get_profile()
 blackweb_aya.set_profile(1)
 blackweb_aya.set_ledmode(1,1)
 blackweb_aya.set_color(1, sys.argv[1],sys.argv[2],sys.argv[3])

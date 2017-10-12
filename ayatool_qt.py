@@ -26,7 +26,7 @@ import blackweb_aya
 
 class config():
 	def __init__(self):
-		global rgb, profile, ledmode, pollingrate, smartkey
+		global rgb, profile, ledmode, polling, smartkey
 		
 
 class AyaTool(QtGui.QMainWindow, ayatoolgui.Ui_MainWindow):
@@ -81,6 +81,8 @@ class AyaTool(QtGui.QMainWindow, ayatoolgui.Ui_MainWindow):
 		elif config.ledmode == 3:
 			self.radioLedCycle.setChecked(1)
 		
+		config.polling = blackweb_aya.get_polling(config.profile) 
+		self.comboMousePolling.setCurrentIndex(config.polling)
 		# todo:
 		# implement reading current values for:
 		# * polling rate
@@ -96,13 +98,13 @@ class AyaTool(QtGui.QMainWindow, ayatoolgui.Ui_MainWindow):
 		blackweb_aya.set_profile(config.profile)
 		blackweb_aya.set_ledmode(config.profile,config.ledmode)
 		blackweb_aya.set_color(config.profile, config.rgb[0],config.rgb[1],config.rgb[2])
-		blackweb_aya.set_polling(config.profile,config.pollingrate)
+		blackweb_aya.set_polling(config.profile,config.polling)
 		blackweb_aya.set_smartkey(config.smartkey)
 		blackweb_aya.store_settings(config.profile)
 		blackweb_aya.close_usb()
 		
 	def PollingRate(self,i):
-		config.pollingrate = i
+		config.polling = i
 		
 	def LedMode(self):
 		if self.radioLedOff.isChecked():

@@ -99,8 +99,6 @@ def hex2string(h):
 	
 	
 def get_color(profile):
-	if DEBUG:
-		print "get_color()"
 		
 	#get the current LED color
 	data = [0x07, 0x8a] + [profile] + [0x00]*5
@@ -116,8 +114,6 @@ def get_color(profile):
 	
 	
 def set_color(profile, r,g,b):
-	if DEBUG:
-		print "set_color()"
 		
 	# set a new LED colour
 	data = [0x07, 0x0a] + [profile] + [ 0x00] + [int(r),int(g),int(b)] + [0x00]
@@ -125,8 +121,7 @@ def set_color(profile, r,g,b):
 
 
 def get_ledmode(profile):
-	if DEBUG:
-		print "get_ledmode()"
+
 	#get the active LED light mode
 	data = [0x07, 0x8c] + [profile] + [0x00]*5
 	ret = usb_read(data)
@@ -144,8 +139,6 @@ def get_ledmode(profile):
 
 
 def set_ledmode(profile, n):
-	if DEBUG:
-		print "set_ledmode()"
 		
 	#set the LED light mode
 
@@ -162,8 +155,6 @@ def set_ledmode(profile, n):
 	
 
 def set_smartkey(n):
-	if DEBUG:
-		print "set_smartkey()"
 		
 	#set the smartkey delay
 	data = [0x07, 0x19, 0x01] + [0x00]*5
@@ -171,8 +162,6 @@ def set_smartkey(n):
 	
 	 
 def set_profile(profile):
-	if DEBUG:
-		print "set_profile()"
 		
 	#set the new profile slot
 	data = [0x07, 0x03] + [profile] + [0x00]*5
@@ -180,8 +169,6 @@ def set_profile(profile):
 	
 
 def get_profile():
-	if DEBUG:
-		print "get_profile()"
 		
 	#get the actively set profile slot
 	data = [0x07, 0x83] + [0x00]*6
@@ -191,8 +178,6 @@ def get_profile():
 	
 
 def store_settings(profile):
-	if DEBUG:
-		print "store_settings()"
 		
 	#store hardware persistent settings
 	data = [0x07, 0x44] + [profile] + [0x00]*5 
@@ -200,8 +185,6 @@ def store_settings(profile):
 	
 
 def factory_reset():
-	if DEBUG:
-		print "factory_reset()"
 		
 	#reset to the hardware defaults
 	data = [0x07, 0x03] + [0x00]*6
@@ -209,8 +192,6 @@ def factory_reset():
 
 
 def set_polling(profile, n):
-	if DEBUG:
-		print "set_polling()"
 		
 	#set hardware mouse polling speed
 	if n == 0:
@@ -226,5 +207,13 @@ def set_polling(profile, n):
 	usb_write(data)
 
 
+def get_polling(profile):
+	
+	data = [0x07] + [0x81] + [profile] + [0x00]*5
+	ret = usb_read(data)
+	
+	return ret[1]
+	
+	
 def debug():
 	pass
