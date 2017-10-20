@@ -58,7 +58,7 @@ class AyaTool(QtGui.QMainWindow, ayatoolgui.Ui_MainWindow):
 		
 		# get the current profile
 		config.profile = blackweb_aya.get_profile()
-		self.comboMousePolling.setCurrentIndex(config.profile -1)
+		self.comboProfile.setCurrentIndex(config.profile -1)
 
 		# get the smartkey
 				
